@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>収録楽曲情報 - ホロドリ非公式サイト</title>
+  <link rel="stylesheet" href="song.css">
+  <link rel="icon" href="img/favicon.ico">
+</head>
+
+<body>
+  <a href="home page.html" class="back-btn">
+    <img src="back.png" alt="戻る">
+  </a>
+
+  <div class="background-image-container">
+    <img src="img/background_1.png" alt="背景画像" class="background-image">
+  </div>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="img/logo.webp" alt="logo">
+      <span class="site-title">ホロドリ非公式サイト<br>収録楽曲情報</span>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a href="https://opening.hololive-dreams.com/">公式サイトはこちら</a></li>
+      <li><a href="https://x.com/hololive_dreams">公式Xはこちら</a></li>
+      <li><a href="https://www.youtube.com/@hololivedreams">公式YouTubeはこちら</a></li>
+    </ul>
+  </nav>
+
+<main>
+<h1 style="text-align: center; margin-top: 50px;">収録楽曲一覧</h1>
+
+ <div class="search-container">
+   <input type="text" id="search-input" placeholder="曲名またはホロメンの名前で検索">
+ </div>
+
+ <p id="page-info" style="text-align: center;">
+   全 <span id="total-count">0</span> 曲中、<span id="hit-count">0</span> 曲を表示
+ </p>
+
+  <div id="song-list-container" class="song-list"></div>
+
+  <div class="pagination">
+    <button id="prev-btn" class="page-btn">◀</button>
+    <span id="current-page-num">1 / 1</span>
+    <button id="next-btn" class="page-btn">▶</button>
+  </div>
+</main>
+
+<script src="song-data.js"></script>
+<script src="song-main.js"></script>
+
+</body>
+</html>
