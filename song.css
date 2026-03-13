@@ -1,4 +1,3 @@
-/* --- 全体・背景設定 --- */
 body {
   margin: 0;
   background: #fff;
@@ -26,7 +25,6 @@ body {
   opacity: 0.15;
 }
 
-/* --- ナビゲーション --- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -79,19 +77,17 @@ body {
   border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
-  transition: all 0.3s ease; /* 動きをなめらかに */
+  transition: all 0.3s ease;
   text-align: center;
   min-width: 180px;
 }
 
-/* ★動き復活：ナビボタン */
 .nav-links a:hover {
   transform: scale(1.05);
   background-color: #0094d8;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* --- 戻るボタン --- */
 .back-btn {
   position: fixed;
   top: 15px;
@@ -106,13 +102,11 @@ body {
   transition: filter 0.3s ease, transform 0.3s ease;
 }
 
-/* ★動き復活：戻るボタン */
 .back-btn:hover img {
   filter: brightness(1.2);
-  transform: translateX(-3px); /* 少し左に動く */
+  transform: translateX(-3px);
 }
 
-/* --- 検索ボックスエリア --- */
 .search-container {
   display: flex;
   justify-content: center;
@@ -138,14 +132,12 @@ body {
   background-size: 25px auto;
 }
 
-/* ★動き復活：検索窓フォーカス */
 #search-input:focus {
   box-shadow: 0 0 15px rgba(70, 212, 255, 0.4);
   border-color: #0094d8;
   transform: translateY(-2px);
 }
 
-/* --- 楽曲カードリスト --- */
 .song-list {
   display: flex;
   flex-wrap: wrap;
@@ -170,10 +162,9 @@ body {
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 動きを追加 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* ★動き復活：カードの浮き上がり */
 .song-card:hover img {
   transform: translateY(-8px) scale(1.03);
   box-shadow: 0 12px 24px rgba(0,0,0,0.15);
@@ -189,10 +180,9 @@ body {
 }
 
 .song-card:hover p {
-  color: #0094d8; /* ホバー時に文字色も少し変える */
+  color: #0094d8;
 }
 
-/* --- ページネーション --- */
 .pagination {
   display: flex;
   justify-content: center;
@@ -213,7 +203,6 @@ body {
   transition: all 0.3s ease;
 }
 
-/* ★動き復活：ページボタン */
 .page-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   filter: brightness(1.1);
@@ -225,7 +214,6 @@ body {
   cursor: not-allowed;
 }
 
-/* --- 件数表示 --- */
 #page-info {
   font-size: 16px;
   color: #666;
@@ -238,7 +226,6 @@ body {
   color: #0094d8;
 }
 
-/* --- モバイル対応 (レスポンシブ) --- */
 @media (max-width: 1024px) {
   .song-card { width: calc(25% - 20px); }
   .site-title { font-size: 32px; }
@@ -252,7 +239,6 @@ body {
   .nav-links li { width: 100%; }
   .nav-links a { width: 90%; max-width: 300px; min-width: unset; }
   .song-card { width: calc(33.33% - 15px); }
-  /* モバイルではホバー演出をオフにするか控えめにすると操作感が良くなります */
   .song-card:hover img { transform: none; }
 }
 
