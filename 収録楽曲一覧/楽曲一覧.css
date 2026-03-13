@@ -1,13 +1,30 @@
-/* --- 全体設定 --- */
 body {
   margin: 0;
   background: #fff;
   background-attachment: fixed;
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
-  overflow-x: hidden; /* 横揺れ防止 */
+  overflow-x: hidden;
 }
 
-/* --- ナビゲーションバー --- */
+.background-image-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.background-image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 500px; 
+  height: auto;
+  opacity: 0.15;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -31,14 +48,14 @@ body {
 
 .site-title {
   font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 500;
   background: linear-gradient(-45deg, #46d4ff, #0094d8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   display: inline-block;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .nav-links {
@@ -54,13 +71,13 @@ body {
 .nav-links a {
   display: inline-block;
   text-decoration: none;
-  background-color: #46d4ff;
+  background-color: #46d4ff; 
   color: white;
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; /* 動きをなめらかに */
   text-align: center;
   min-width: 180px;
 }
@@ -71,7 +88,6 @@ body {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* --- 戻るボタン --- */
 .back-btn {
   position: fixed;
   top: 20px;
@@ -89,7 +105,6 @@ body {
   transform: translateX(-3px);
 }
 
-/* --- 楽曲詳細レイアウト --- */
 .song-detail-flex {
   display: flex;
   justify-content: center;
@@ -142,7 +157,6 @@ body {
 .bpm-label { font-size: 40px; font-weight: bold; color: #5d7ca3; }
 .bpm-value { font-size: 40px; font-weight: bold; color: #2b5482; }
 
-/* 難易度リスト */
 .song-stats-vertical {
   position: relative;
   height: 220px;
@@ -165,7 +179,6 @@ body {
 .stat-row img { width: 140px; height: auto; }
 .lv-text, .combo-text { font-size: 36px; font-weight: bold; color: #2b5482; }
 
-/* --- 譜面確認セクション --- */
 .chart-check-section {
   padding: 40px 50px;
   text-align: center;
@@ -218,8 +231,10 @@ body {
 .normal-video { border: 8px solid #ffcc80; }
 .easy-video   { border: 8px solid #81c784; }
 
+/* --- 前半部分は変更なし --- */
+
 /* -------------------------------------------
-   モバイル対応 (レスポンシブ)
+   モバイル対応 (レスポンシブ) - ここを重点的に修正
 ------------------------------------------- */
 @media (max-width: 1024px) {
   .navbar { padding: 20px 5%; }
@@ -228,7 +243,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* ナビを縦並びに */
   .navbar { flex-direction: column; text-align: center; }
   .logo { flex-direction: column; margin-bottom: 15px; }
   .logo img { width: 180px; }
@@ -236,39 +250,55 @@ body {
   .nav-links { align-items: center; width: 100%; }
   .nav-links a { min-width: unset; width: 90%; font-size: 14px; }
 
-  /* 楽曲詳細を縦並びに */
   .song-detail-flex {
     flex-direction: column;
     padding: 60px 20px;
-    gap: 30px;
+    gap: 20px; /* 隙間を少し詰める */
   }
 
-  .side-jacket img { width: 100%; max-width: 350px; }
+  .side-jacket img { width: 100%; max-width: 300px; }
   .song-info-area { width: 100%; align-items: center; text-align: center; }
-  .display-title { font-size: 36px; }
+  
+  /* 曲名とBPMのサイズをさらに調整 */
+  .display-title { font-size: 32px; }
+  .bpm-area { margin-top: 5px; justify-content: center; }
+  .bpm-label, .bpm-value { font-size: 22px; }
 
-  /* 難易度を縦に正しく並べる */
+  /* ★難易度エリアの重なり・間隔を完全に修正 */
   .song-stats-vertical {
-    height: auto;
+    position: relative;
+    height: auto; /* 高さを自動に */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 12px;     /* ここで縦の間隔を調整（15pxから12pxへ） */
+    margin-top: 20px;
+    width: 100%;
   }
   
   .stat-row {
-    position: static; /* absolute解除 */
+    position: static !important; /* 絶対位置を強制解除 */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 0;
   }
 
-  .stat-row img { width: 120px; }
-  .lv-text, .combo-text { font-size: 24px; }
-  .bpm-label, .bpm-value { font-size: 28px; }
+  .stat-row img { 
+    width: 100px; /* スマホ用に画像を少し小さくしてバランスをとる */
+    height: auto;
+  }
+  
+  .lv-text, .combo-text { 
+    font-size: 18px; /* 文字をスマホで見やすいサイズに */
+    min-width: auto;
+  }
 
-  /* 戻るボタンを使いやすく */
-  .back-btn img { width: 45px; }
+  .back-btn img { width: 40px; }
 }
 
 @media (max-width: 480px) {
   .display-title { font-size: 28px; }
-  .section-title { font-size: 32px; }
+  .section-title { font-size: 28px; }
+  .stat-row { gap: 10px; } /* 要素同士の横の隙間も少し詰める */
 }
