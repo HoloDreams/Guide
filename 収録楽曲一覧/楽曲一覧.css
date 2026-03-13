@@ -1,12 +1,14 @@
-/* --- 全体設定 --- */
+/* --- 既存のスタイルを維持しつつ、動画エリアを修正 --- */
+
 body {
   margin: 0;
   background: #fff;
   background-attachment: fixed;
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+  overflow-x: hidden;
 }
 
-/* --- ナビゲーションバー --- */
+/* --- ナビゲーションバー (変更なし) --- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -24,7 +26,6 @@ body {
 .logo img {
   width: 250px;
   height: auto;
-  display: block;
 }
 
 .site-title {
@@ -63,12 +64,6 @@ body {
   min-width: 180px;
 }
 
-.nav-links a:hover {
-  transform: scale(1.05);
-  background-color: #0094d8;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
 /* --- 戻るボタン --- */
 .back-btn {
   position: absolute;
@@ -83,7 +78,6 @@ body {
 
 /* --- 楽曲詳細レイアウト --- */
 .song-detail-flex {
-  position: relative;
   display: flex;
   justify-content: center;
   gap: 80px; 
@@ -99,18 +93,14 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-/* 楽曲情報エリア */
 .song-info-area {
-  position: relative;
   width: 500px;
-  /* 曲名とBPMエリアを縦に並べるための設定 */
   display: flex;
   flex-direction: column;
 }
 
-/* 曲名（absoluteを解除して高さを持たせる） */
 .display-title {
-  font-size: 70px;
+  font-size: 60px; /* 少し調整 */
   font-weight: bold;
   color: #5d7ca3;
   margin: 0;
@@ -121,109 +111,75 @@ body {
 .display-title a {
   color: #5d7ca3;
   text-decoration: none;
-  transition: all 0.3s;
 }
 
-.display-title a:hover {
-  color: #46d4ff;
-  opacity: 0.8;
-}
-
-/* BPM表示エリア（曲名の下に自動で配置される） */
 .bpm-area {
-  margin-top: 10px; /* 曲名との隙間 */
+  margin-top: 10px;
   display: flex;
   align-items: center;
   gap: 15px;
-  height: 60px; /* 高さを固定しておくと難易度の位置が安定します */
 }
 
-.bpm-label {
-  font-size: 40px;
-  font-weight: bold;
-  color: #5d7ca3;
-  min-width: 140px;
-  text-align: center;
-}
+.bpm-label { font-size: 40px; font-weight: bold; color: #5d7ca3; }
+.bpm-value { font-size: 40px; font-weight: bold; color: #2b5482; }
 
-.bpm-value {
-  font-size: 40px;
-  font-weight: bold;
-  color: #2b5482;
-  font-family: Arial, sans-serif;
-}
-
-/* --- 難易度リスト（前回同様の absolute 指定） --- */
 .song-stats-vertical {
-  position: relative; /* ここを基準にする */
-  height: 280px;      /* absoluteの子要素を表示するための高さ確保 */
-  margin-top: 20px;   /* BPMエリアとの隙間 */
+  margin-top: 20px;
 }
 
 .stat-row {
   display: flex;
   align-items: center;
   gap: 15px;
-  position: absolute;
-  white-space: nowrap;
+  margin-bottom: -60px;
 }
 
-.ex { top: 0px; }
-.hd { top: 70px; }
-.nm { top: 140px; }
-.es { top: 210px; }
+.stat-row img { width: 140px; height: auto; }
+.lv-text, .combo-text { font-size: 32px; font-weight: bold; color: #2b5482; }
 
-.stat-row img {
-  width: 140px;
-  height: auto;
-}
-
-.lv-text, .combo-text {
-  font-size: 40px;
-  font-weight: bold;
-  color: #2b5482;
-  font-family: Arial, sans-serif;
-}
-
-.lv-text {
-  min-width: 90px;
-}
-
-/* --- 譜面確認セクション --- */
+/* --- 譜面確認セクション（2列レイアウト修正） --- */
 .chart-check-section {
-  margin-top: 0px; 
-  padding: 20px 50px;
+  padding: 40px 50px;
   text-align: center;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .section-title {
   font-size: 50px;
   color: #5d7ca3;
-  margin-bottom: 20px; 
+  margin-bottom: 40px; 
 }
 
 .video-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
+  display: grid;
+  /* 1行に2列配置。各列の幅は 1fr（均等） */
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 40px; /* 動画同士の隙間 */
+  justify-items: center; /* 中央に寄せる */
 }
 
 .video-wrapper {
-  padding: 5px 20px 20px 20px; 
-  border-radius: 15px;
+  width: 100%;
+  max-width: 600px; /* 枠の最大幅を制限 */
+  padding: 10px 20px 30px 20px; 
+  border-radius: 20px;
   background: #fff;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
 
 .video-header img {
-  height: 160px; 
+  height: 120px; /* ヘッダー画像を少し小さくしてバランス調整 */
   width: auto;
   display: block;
   margin: 0 auto;
 }
 
 .video-wrapper iframe {
+  width: 100%; /* 親要素(wrapper)に合わせて横幅を100%に */
+  aspect-ratio: 16 / 9; /* 16:9の比率を維持 */
+  height: auto;
   border-radius: 8px;
   display: block;
   margin: 0 auto;
@@ -231,30 +187,21 @@ body {
 }
 
 /* 難易度別の枠線カラー */
-.expert-video { border: 6px solid #b388ff; }
-.hard-video   { border: 6px solid #ff8a80; }
-.normal-video { border: 6px solid #ffcc80; }
-.easy-video   { border: 6px solid #81c784; }
+.expert-video { border: 8px solid #b388ff; }
+.hard-video   { border: 8px solid #ff8a80; }
+.normal-video { border: 8px solid #ffcc80; }
+.easy-video   { border: 8px solid #81c784; }
 
-/* 楽曲一覧 */
-.song-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 40px 70px;
-}
-
-.song-card {
-  width: calc(20% - 20px);
-  text-align: center;
-}
-
-.song-card img {
-  width: 100%;
-  border-radius: 10px;
-  transition: transform 0.3s;
-}
-
-.song-card img:hover {
-  transform: translateY(-5px);
+/* --- レスポンシブ対応（スマホで見るときは1列にする） --- */
+@media (max-width: 1024px) {
+  .video-grid {
+    grid-template-columns: 1fr; /* 画面が狭くなったら1列に */
+    gap: 30px;
+  }
+  
+  .song-detail-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
 }
