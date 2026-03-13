@@ -1,20 +1,20 @@
-/* --- 既存のスタイルを維持しつつ、動画エリアを修正 --- */
-
+/* --- 全体設定 --- */
 body {
   margin: 0;
   background: #fff;
   background-attachment: fixed;
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
-  overflow-x: hidden;
+  overflow-x: hidden; /* 横揺れ防止 */
 }
 
-/* --- ナビゲーションバー (変更なし) --- */
+/* --- ナビゲーションバー --- */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 70px;
+  padding: 30px 5%;
   background-color: #f8f8f8;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -26,6 +26,7 @@ body {
 .logo img {
   width: 250px;
   height: auto;
+  display: block;
 }
 
 .site-title {
@@ -47,7 +48,7 @@ body {
   list-style: none;
   padding: 0;
   margin: 0;
-  gap: 4px;
+  gap: 8px;
 }
 
 .nav-links a {
@@ -59,14 +60,20 @@ body {
   border-radius: 8px;
   font-size: 18px;
   font-weight: bold;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
   text-align: center;
   min-width: 180px;
 }
 
+.nav-links a:hover {
+  transform: scale(1.05);
+  background-color: #0094d8;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
 /* --- 戻るボタン --- */
 .back-btn {
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 20px;
   z-index: 2000;
@@ -74,6 +81,12 @@ body {
 
 .back-btn img {
   width: 60px;
+  transition: filter 0.3s, transform 0.3s;
+}
+
+.back-btn:hover img {
+  filter: brightness(1.2);
+  transform: translateX(-3px);
 }
 
 /* --- 楽曲詳細レイアウト --- */
@@ -84,6 +97,7 @@ body {
   padding: 80px 50px 20px 50px; 
   margin: 0 auto;
   max-width: 1200px;
+  box-sizing: border-box;
 }
 
 .side-jacket img {
@@ -100,7 +114,7 @@ body {
 }
 
 .display-title {
-  font-size: 60px; /* 少し調整 */
+  font-size: 60px;
   font-weight: bold;
   color: #5d7ca3;
   margin: 0;
@@ -111,6 +125,11 @@ body {
 .display-title a {
   color: #5d7ca3;
   text-decoration: none;
+  transition: color 0.3s;
+}
+
+.display-title a:hover {
+  color: #0094d8;
 }
 
 .bpm-area {
@@ -123,7 +142,10 @@ body {
 .bpm-label { font-size: 40px; font-weight: bold; color: #5d7ca3; }
 .bpm-value { font-size: 40px; font-weight: bold; color: #2b5482; }
 
+/* 難易度リスト */
 .song-stats-vertical {
+  position: relative;
+  height: 220px;
   margin-top: 20px;
 }
 
@@ -131,13 +153,19 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: -60px;
+  position: absolute;
+  white-space: nowrap;
 }
 
-.stat-row img { width: 140px; height: auto; }
-.lv-text, .combo-text { font-size: 32px; font-weight: bold; color: #2b5482; }
+.ex { top: 0px; }
+.hd { top: 55px; }
+.nm { top: 110px; }
+.es { top: 165px; }
 
-/* --- 譜面確認セクション（2列レイアウト修正） --- */
+.stat-row img { width: 140px; height: auto; }
+.lv-text, .combo-text { font-size: 36px; font-weight: bold; color: #2b5482; }
+
+/* --- 譜面確認セクション --- */
 .chart-check-section {
   padding: 40px 50px;
   text-align: center;
@@ -153,15 +181,14 @@ body {
 
 .video-grid {
   display: grid;
-  /* 1行に2列配置。各列の幅は 1fr（均等） */
   grid-template-columns: repeat(2, 1fr); 
-  gap: 40px; /* 動画同士の隙間 */
-  justify-items: center; /* 中央に寄せる */
+  gap: 40px;
+  justify-items: center;
 }
 
 .video-wrapper {
   width: 100%;
-  max-width: 600px; /* 枠の最大幅を制限 */
+  max-width: 600px;
   padding: 10px 20px 30px 20px; 
   border-radius: 20px;
   background: #fff;
@@ -170,15 +197,15 @@ body {
 }
 
 .video-header img {
-  height: 120px; /* ヘッダー画像を少し小さくしてバランス調整 */
+  height: 120px;
   width: auto;
   display: block;
   margin: 0 auto;
 }
 
 .video-wrapper iframe {
-  width: 100%; /* 親要素(wrapper)に合わせて横幅を100%に */
-  aspect-ratio: 16 / 9; /* 16:9の比率を維持 */
+  width: 100%;
+  aspect-ratio: 16 / 9;
   height: auto;
   border-radius: 8px;
   display: block;
@@ -186,22 +213,62 @@ body {
   border: none;
 }
 
-/* 難易度別の枠線カラー */
 .expert-video { border: 8px solid #b388ff; }
 .hard-video   { border: 8px solid #ff8a80; }
 .normal-video { border: 8px solid #ffcc80; }
 .easy-video   { border: 8px solid #81c784; }
 
-/* --- レスポンシブ対応（スマホで見るときは1列にする） --- */
+/* -------------------------------------------
+   モバイル対応 (レスポンシブ)
+------------------------------------------- */
 @media (max-width: 1024px) {
-  .video-grid {
-    grid-template-columns: 1fr; /* 画面が狭くなったら1列に */
-    gap: 30px;
-  }
-  
+  .navbar { padding: 20px 5%; }
+  .site-title { font-size: 32px; }
+  .video-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  /* ナビを縦並びに */
+  .navbar { flex-direction: column; text-align: center; }
+  .logo { flex-direction: column; margin-bottom: 15px; }
+  .logo img { width: 180px; }
+  .site-title { font-size: 26px; }
+  .nav-links { align-items: center; width: 100%; }
+  .nav-links a { min-width: unset; width: 90%; font-size: 14px; }
+
+  /* 楽曲詳細を縦並びに */
   .song-detail-flex {
     flex-direction: column;
-    align-items: center;
-    gap: 40px;
+    padding: 60px 20px;
+    gap: 30px;
   }
+
+  .side-jacket img { width: 100%; max-width: 350px; }
+  .song-info-area { width: 100%; align-items: center; text-align: center; }
+  .display-title { font-size: 36px; }
+
+  /* 難易度を縦に正しく並べる */
+  .song-stats-vertical {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .stat-row {
+    position: static; /* absolute解除 */
+  }
+
+  .stat-row img { width: 120px; }
+  .lv-text, .combo-text { font-size: 24px; }
+  .bpm-label, .bpm-value { font-size: 28px; }
+
+  /* 戻るボタンを使いやすく */
+  .back-btn img { width: 45px; }
+}
+
+@media (max-width: 480px) {
+  .display-title { font-size: 28px; }
+  .section-title { font-size: 32px; }
 }
