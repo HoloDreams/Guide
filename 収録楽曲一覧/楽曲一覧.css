@@ -1,3 +1,4 @@
+/* --- 全体設定 --- */
 body {
   margin: 0;
   background: #fff;
@@ -6,25 +7,7 @@ body {
   overflow-x: hidden;
 }
 
-.background-image-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.background-image {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 500px; 
-  height: auto;
-  opacity: 0.15;
-}
-
+/* --- ナビゲーション --- */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -77,9 +60,10 @@ body {
   border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
-  transition: all 0.3s ease; /* 動きをなめらかに */
+  transition: all 0.3s ease;
   text-align: center;
-  min-width: 180px;
+  width: 250px; /* PC版のボタン幅を均一に */
+  box-sizing: border-box;
 }
 
 .nav-links a:hover {
@@ -88,6 +72,7 @@ body {
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* --- 戻るボタン --- */
 .back-btn {
   position: fixed;
   top: 20px;
@@ -105,6 +90,7 @@ body {
   transform: translateX(-3px);
 }
 
+/* --- 楽曲詳細（PCレイアウト） --- */
 .song-detail-flex {
   display: flex;
   justify-content: center;
@@ -157,6 +143,7 @@ body {
 .bpm-label { font-size: 40px; font-weight: bold; color: #5d7ca3; }
 .bpm-value { font-size: 40px; font-weight: bold; color: #2b5482; }
 
+/* 難易度（PC版） */
 .song-stats-vertical {
   position: relative;
   height: 220px;
@@ -179,6 +166,7 @@ body {
 .stat-row img { width: 140px; height: auto; }
 .lv-text, .combo-text { font-size: 36px; font-weight: bold; color: #2b5482; }
 
+/* --- 譜面確認セクション --- */
 .chart-check-section {
   padding: 40px 50px;
   text-align: center;
@@ -231,10 +219,8 @@ body {
 .normal-video { border: 8px solid #ffcc80; }
 .easy-video   { border: 8px solid #81c784; }
 
-/* --- 前半部分は変更なし --- */
-
 /* -------------------------------------------
-   モバイル対応 (レスポンシブ) - ここを重点的に修正
+   モバイル対応 (レスポンシブ)
 ------------------------------------------- */
 @media (max-width: 1024px) {
   .navbar { padding: 20px 5%; }
@@ -243,62 +229,92 @@ body {
 }
 
 @media (max-width: 768px) {
-  .navbar { flex-direction: column; text-align: center; }
-  .logo { flex-direction: column; margin-bottom: 15px; }
-  .logo img { width: 180px; }
-  .site-title { font-size: 26px; }
-  .nav-links { align-items: center; width: 100%; }
-  .nav-links a { min-width: unset; width: 90%; font-size: 14px; }
-
-  .song-detail-flex {
+  /* --- ナビゲーション周りの修正 --- */
+  .navbar {
     flex-direction: column;
-    padding: 60px 20px;
-    gap: 20px; /* 隙間を少し詰める */
+    padding: 20px;
+    text-align: center;
   }
 
-  .side-jacket img { width: 100%; max-width: 300px; }
-  .song-info-area { width: 100%; align-items: center; text-align: center; }
-  
-  /* 曲名とBPMのサイズをさらに調整 */
-  .display-title { font-size: 32px; }
-  .bpm-area { margin-top: 5px; justify-content: center; }
-  .bpm-label, .bpm-value { font-size: 22px; }
-
-  /* ★難易度エリアの重なり・間隔を完全に修正 */
-  .song-stats-vertical {
-    position: relative;
-    height: auto; /* 高さを自動に */
-    display: flex;
+  .logo {
     flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .logo img {
+    width: 150px;
+  }
+
+  .site-title {
+    font-size: 20px; /* タイトルを少し小さくして余裕を持たせる */
+    line-height: 1.3;
+  }
+
+  .nav-links {
     align-items: center;
-    gap: 12px;     /* ここで縦の間隔を調整（15pxから12pxへ） */
-    margin-top: 20px;
     width: 100%;
+    gap: 10px; /* ボタン同士の間隔 */
+    padding: 0;
   }
-  
-  .stat-row {
-    position: static !important; /* 絶対位置を強制解除 */
+
+  .nav-links li {
+    width: 100%;
     display: flex;
     justify-content: center;
-    width: 100%;
-    margin-bottom: 0;
   }
 
-  .stat-row img { 
-    width: 100px; /* スマホ用に画像を少し小さくしてバランスをとる */
-    height: auto;
-  }
-  
-  .lv-text, .combo-text { 
-    font-size: 18px; /* 文字をスマホで見やすいサイズに */
-    min-width: auto;
+  .nav-links a {
+    /* 横幅を画面の85%に固定し、均一にする */
+    width: 85% !important; 
+    max-width: 320px;
+    min-width: unset;
+    
+    /* 文字が改行されないように調整 */
+    font-size: 15px !important; 
+    white-space: nowrap; /* 絶対に改行させない */
+    padding: 12px 0; /* 上下の余白で高さを揃える */
+    
+    display: block;
+    border-radius: 8px;
+    box-sizing: border-box;
   }
 
-  .back-btn img { width: 40px; }
+  /* --- イラスト・楽曲情報エリア（前回までの修正を含む） --- */
+  .song-detail-flex {
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 20px !important;
+    gap: 20px !important;
+  }
+
+  .side-jacket {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    order: -1;
+  }
+
+  .side-jacket img {
+    width: 220px !important;
+    height: auto !important;
+  }
+
+  .song-info-area {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .bpm-area {
+    display: flex !important;
+    justify-content: center !important; /* 中央寄せを強制 */
+    align-items: center !important;
+    margin: 10px 0 !important;
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 480px) {
-  .display-title { font-size: 28px; }
-  .section-title { font-size: 28px; }
-  .stat-row { gap: 10px; } /* 要素同士の横の隙間も少し詰める */
+  .display-title { font-size: 26px !important; }
+  .section-title { font-size: 28px !important; }
 }
